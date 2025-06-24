@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registro de Estudiantes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />    
+</head>
+<body class="bg-gradient-to-b from-pink-100 to-blue-100 min-h-screen p-4">
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold text-purple-700 text-center">Formulario de Registro de Estudiantes</h2>
+
+    <!-- ✅ FORMULARIO PHP -->
+    <form id="formEstudiante" action="registro.php" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <input type="text" name="nombre" placeholder="Nombre" id="nombre" required class="p-2 border rounded">
+      <input type="text" name="apellido" placeholder="Apellido" id="apellido" required class="p-2 border rounded">
+      <input type="text" name="documento" placeholder="Documento" id="documento" required class="p-2 border rounded">
+      <select name="sexo" id="sexo" required class="p-2 border rounded">
+        <option value="">Sexo</option>
+        <option value="Femenino">Femenino</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Otro">Otro</option>
+      </select>
+      <input type="text" name="eps" placeholder="EPS" id="eps" required class="p-2 border rounded">
+      <input type="text" name="direccion" placeholder="Dirección" id="direccion" required class="p-2 border rounded">
+      <input type="number" name="edad" placeholder="Edad" id="edad" required class="p-2 border rounded">
+      <input type="text" name="discapacidad" placeholder="Discapacidad" id="discapacidad" class="p-2 border rounded">
+      <input type="text" name="etnia" placeholder="Etnia" id="etnia" class="p-2 border rounded">
+      <input type="text" name="curso" placeholder="Curso" id="curso" required class="p-2 border rounded">
+      <input type="tel" name="telefono" placeholder="Teléfono" id="telefono" required class="p-2 border rounded">
+
+      <div class="md:col-span-2 text-center mt-4">
+        <button type="submit" class="bg-purple-600 text-white font-bold px-6 py-3 rounded-full shadow-lg hover:shadow-xl hover:bg-purple-700 transition duration-300 transform hover:-translate-y-1 flex items-center gap-2">
+          Registrar
+        </button>
+      </div>
+    </form>
+
+    <h3 class="text-xl font-semibold mt-8 mb-4 text-gray-800">Listado de Estudiantes Registrados</h3>
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border border-gray-200 rounded">
+        <thead class="bg-purple-600 text-white">
+          <tr>
+            <th class="px-2 py-1 border">Nombre</th>
+            <th class="px-2 py-1 border">Apellido</th>
+            <th class="px-2 py-1 border">Documento</th>
+            <th class="px-2 py-1 border">Sexo</th>
+            <th class="px-2 py-1 border">EPS</th>
+            <th class="px-2 py-1 border">Dirección</th>
+            <th class="px-2 py-1 border">Edad</th>
+            <th class="px-2 py-1 border">Discapacidad</th>
+            <th class="px-2 py-1 border">Etnia</th>
+            <th class="px-2 py-1 border">Curso</th>
+            <th class="px-2 py-1 border">Teléfono</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
