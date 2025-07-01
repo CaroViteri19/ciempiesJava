@@ -1,1 +1,78 @@
-<!DOCTYPE html><html><body><h1>Versión final</h1></body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CIEMPIÉS</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="min-h-screen bg-gradient-to-b from-pink-200 via-purple-200 to-blue-200"> 
+   
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto items-start px-6 py-10">
+
+
+    <!-- Lado Izquierdo -->
+     <div class="logo">
+    <div class="space-y-6">
+      <!-- Logo y botón juntos -->
+      <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 justify-center lg:justify-start mb-10">
+        <img src="logo.jpeg" alt="Logo SGI" class="w-32 h-32 object-contain rounded-full">
+        <a href="https://www.movilidadbogota.gov.co/web/ciempies" target="_blank" class="flex items-center space-x-2 bg-cyan-300 text-black font-semibold px-4 py-2 rounded-full shadow hover:bg-cyan-400 transition" class="button-tailwind">
+          <img src="click.png" alt="Tailwind" class="h-5">
+          <span>Ciempies movilidad</span>
+        </a>
+      </div>
+</div>
+      <!-- Título y descripción -->
+      <div class="bg-[#0d0034] rounded-lg p-4 text-black space-y-2 text-sm mb-10">
+        <h2 class="text-4xl font-extrabold text-center">
+          CIEMPIÉS
+        </h2>
+        <p class="italic text-center" >Proyecto de movilidad infantil liderado por la Secretaría de Educación del Distrito y la Secretaría Distrital de Movilidad, que mediante caravanas a pie guiadas acompaña a niñas, niños y adolescentes en los recorridos al colegio y de regreso a casa.</p>
+        <br>
+        <p class="italic text-grey-200 text-center">Ciempiés promueve la movilidad sostenible</p>
+      </div>
+
+      <!-- Estadísticas -->
+       
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-black text-center text-sm font-bold">
+        <div class="card-stats"><p class="text-2xl">18</p><p class="uppercase">Caminos Seguros</p></div>
+        <div class="card-stats"><p class="text-2xl">12</p><p class="uppercase">Colegios</p></div>
+        <div class="card-stats"><p class="text-2xl">372</p><p class="uppercase">Beneficiarios</p></div>
+        <div class="card-stats"><p class="text-2xl">6.176</p><p class="uppercase">Viajes</p></div>
+        <div class="card-stats"><p class="text-2xl">40</p><p class="uppercase">Monitores</p></div>
+        <div class="card-stats"><p class="text-2xl">744</p><p class="uppercase">Acompañantes</p></div>
+      </div>
+    </div>
+
+    <!-- Lado Derecho -->
+    <div class="space-y-5 flex flex-col justify-end lg:pt-[120px]">
+      <!-- Encabezado de acceso -->
+      <a  class="bg-cyan-300 text-black font-semibold px-6 py-2 rounded-full shadow hover:bg-cyan-400 transition self-center">
+        Inicio de sesion
+      </a>
+
+      <!-- Formulario de ingreso -->
+   <!-- FORMULARIO DE INGRESO (dentro de tu HTML) -->
+<form action="login.php" method="POST" class="w-full max-w-md bg-white p-6 rounded shadow-md space-y-4 self-center">
+  <div>
+    <label class="block text-gray-700 mb-1">Correo</label>
+    <input type="text" name="correo" placeholder="Correo@gmail.com" class="w-full px-4 py-2 border rounded shadow-sm" required />
+  </div>
+  <div>
+    <label class="block text-gray-700 mb-1">Contraseña</label>
+    <input type="password" name="contraseña" placeholder="****************" class="w-full px-4 py-2 border rounded shadow-sm" required />
+  </div>
+  <div class="flex items-center space-x-2">
+    <input type="checkbox" class="form-checkbox" required>
+    <label class="text-sm text-gray-600">Acepto términos y condiciones</label>
+  </div>
+  <button type="submit" class="bg-cyan-300 hover:bg-cyan-400 text-black font-semibold px-6 py-2 rounded shadow-lg w-full">Ingresar</button>
+</form>
+   
+</div>
+  </div>
+
+</body>
+</html>
