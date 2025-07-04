@@ -123,6 +123,7 @@ if ($conexion->connect_error) {
 }
 
 // Consulta
+<<<<<<< HEAD
 $consulta = "SELECT Id_asistencia, Nombre_Estudiante, Id_Usuario, Cod_Ruta, Fecha, Hora_Inicio, Hora_Final, Estado 
              FROM asistencias 
              ORDER BY Fecha DESC, Hora_Inicio DESC";
@@ -130,22 +131,40 @@ $resultado = $conexion->query($consulta);
 
 
 
+=======
+$consulta = "SELECT Id_asistencia, Id_Estudiante, Id_Usuario, Id_Ruta, Fecha, Hora_Inicio, Hora_Final, Estado FROM asistencias";
+$resultado = $conexion->query($consulta);
+
+>>>>>>> 09644789d01d1ffc18b69311aed34a25bda3c3ea
 // Crear PDF
 $pdf = new PDF_MC_Table();
 $pdf->AddPage('L', 'A4');
 $pdf->SetFont('Arial', '', 12);
+<<<<<<< HEAD
 $pdf->SetWidths([30, 40, 35, 25, 35, 40, 40, 30]);
 
 // Encabezado
 $pdf->Row(['Id_asistencia', 'Nombre_Estudiante', 'Id_Usuario', 'Cod_Ruta', 'Fecha', 'Hora_Inicio', 'Hora_Final', 'Estado']);
+=======
+$pdf->SetWidths([35, 35, 35, 25, 35, 40, 40, 30]);
+
+// Encabezado
+$pdf->Row(['Id_asistencia', 'Id_Estudiante', 'Id_Usuario', 'Id_Ruta', 'Fecha', 'Hora_Inicio', 'Hora_Final', 'Estado']);
+>>>>>>> 09644789d01d1ffc18b69311aed34a25bda3c3ea
 
 // Contenido
 while ($fila = $resultado->fetch_assoc()) {
     $pdf->Row([
         $fila['Id_asistencia'],
+<<<<<<< HEAD
         $fila['Nombre_Estudiante'],
         $fila['Id_Usuario'],
         $fila['Cod_Ruta'],
+=======
+        $fila['Id_Estudiante'],
+        $fila['Id_Usuario'],
+        $fila['Id_Ruta'],
+>>>>>>> 09644789d01d1ffc18b69311aed34a25bda3c3ea
         $fila['Fecha'],
         $fila['Hora_Inicio'],
         $fila['Hora_Final'],
