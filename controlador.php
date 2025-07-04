@@ -12,8 +12,6 @@ if (!empty($_POST["inicio"])) {
         $usuario = trim($_POST["usuario"]);
         $contraseña = $_POST["contraseña"];
         
-        // CONEXIÓN A LA BASE DE DATOS (debe estar definida previamente)
-        // $conexion = new mysqli("host", "usuario", "contraseña", "basedatos");
         
         // Consulta preparada para seguridad (corrección de inyección SQL)
         $sql = $conexion->prepare("SELECT * FROM usuario WHERE email = ? AND contraseña = ? LIMIT 1");
@@ -21,15 +19,15 @@ if (!empty($_POST["inicio"])) {
         $sql->execute();
         $resultado = $sql->get_result();
         
-        // Verificar si se encontró el usuario (sintaxis corregida)
+        // Verificar si se encontró el usuario 
         if ($datos = $resultado->fetch_object()) {
             // Guardar datos de usuario en sesión
             $_SESSION['usuario'] = $datos->usuario;
-            $_SESSION['id_usuario'] = $datos->id; // Asumiendo que hay un campo 'id'
-            
-            // Redireccionar (sintaxis corregida)
+            $_SESSION['id_usuario'] = $datos->id; 
+
+            // Redireccionar 
             header("Location: modulos.html");
-            exit(); // Importante después de header
+            exit();
         } else {
             echo "ACCESO DENEGADO";
         }
@@ -39,6 +37,6 @@ if (!empty($_POST["inicio"])) {
     }
 }
 
-// Cerrar conexión (asumiendo que $conexion está definida en otro archivo)
+// Cerrar conexión 
 $conexion->close();
 ?>

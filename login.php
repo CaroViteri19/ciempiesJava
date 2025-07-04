@@ -1,10 +1,12 @@
-<?php 
+<?php
 session_start();
 include 'conexion.php';
+
 
 // Obtener datos del formulario
 $correo = $_POST['correo'] ?? '';
 $contrasena = $_POST['contraseña'] ?? '';
+
 
 // Validar campos vacíos
 if (empty($correo) || empty($contrasena)) {
@@ -12,26 +14,41 @@ if (empty($correo) || empty($contrasena)) {
     exit();
 }
 
+
 try {
-    // Consulta: seleccionar usuario por correo y contraseña
-    $sql = "SELECT id_usuario, email FROM usuario WHERE email = ? AND contraseña = ?";
+    // Modificar la consulta para incluir el rol
+    $sql = "SELECT id_usuario, email, rol FROM usuario WHERE email = ? AND contraseña = ?";
     $stmt = $mysqli->prepare($sql);
+
 
     if (!$stmt) {
         throw new Exception('Error en la preparación de la consulta SQL.');
     }
 
+
     $stmt->bind_param("ss", $correo, $contrasena);
     $stmt->execute();
     $result = $stmt->get_result();
 
+
     // Si hay coincidencia
     if ($result->num_rows === 1) {
+        $usuario = $result->fetch_assoc();
+
+
+        // Guardar datos en sesión
+        $_SESSION['id_usuario'] = $usuario['id_usuario'];
+        $_SESSION['email'] = $usuario['email'];
+        $_SESSION['rol'] = $usuario['rol']; 
+
+
         echo "<script>
                 alert('✅ Bienvenido al sistema');
-                window.location.href = 'modulos.html';
+                window.location.href = 'modulos.php';
               </script>";
         exit();
+
+
     } else {
         echo "<script>
                 alert('❌ Datos incorrectos o no encontrados');
@@ -39,6 +56,7 @@ try {
               </script>";
         exit();
     }
+
 
 } catch (Exception $e) {
     echo "<script>
@@ -52,5 +70,3 @@ try {
     }
     $mysqli->close();
 }
-?>
-
