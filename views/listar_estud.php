@@ -8,7 +8,8 @@ if ($mysqli->connect_error) {
 }
 
 // Consulta para obtener los datos
-$sql = "SELECT nombre, apellido, documento, sexo, eps, direccion, edad, discapacidad, etnia, curso, telefono FROM estudiante ORDER BY edad DESC LIMIT 10";
+$sql = "SELECT nombre, apellido, documento, sexo, eps, direccion, edad, discapacidad, etnia, curso, telefono FROM estudiante ORDER BY Id_estudiante DESC LIMIT 15";
+
 $resultado = $mysqli->query($sql);
 
 // Generar las filas HTML

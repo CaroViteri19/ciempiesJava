@@ -1,10 +1,10 @@
-  <?php
+<?php
 session_start();
 
 $rol = $_SESSION['rol'] ?? '';
 $roles_autorizados = ['administrador', 'apoyo territorial'];
 
-// Si el usuario no tiene permiso
+// Si no tiene permiso
 if (!in_array($rol, $roles_autorizados)) {
     echo "<script>
             alert('⛔ Acceso denegado para: $rol');
@@ -13,11 +13,15 @@ if (!in_array($rol, $roles_autorizados)) {
     exit();
 }
 
-// Si el usuario tiene permiso, mostrar alerta de bienvenida
+// Si tiene permiso
 echo "<script>
         alert('✅ Bienvenido: $rol');
       </script>";
 ?>
+
+<div class="fixed top-4 right-4 bg-purple-200 text-purple-800 px-4 py-2 rounded-lg shadow-md font-semibold">
+  Bienvenido <?php echo htmlspecialchars($rol); ?>
+</div>
 
 
 <!DOCTYPE html>
@@ -33,12 +37,11 @@ echo "<script>
  <!-- Logo y botón juntos -->
 <div class="fixed top-4 left-4 z-50 flex items-center space-x-4">
   <!-- Logo -->
-  <img src="logo.jpeg" alt="Logo" class="h-20 w-20 rounded-full object-cover shadow-md">
+  <img src="../assets/logo.jpeg" alt="Logo" class="h-20 w-20 rounded-full object-cover shadow-md">
 
   <!-- Botón de regreso -->
-  <a href="modulos.php" class="flex items-center space-x-2 bg-pink-100 text-white font-semibold px-4 py-2 rounded-full shadow hover:bg-cyan-600 transition transform hover:scale-105">
-
-    <img src="pag_inicio.png" alt="Inicio" class="h-5">
+  <a href="../controlador/modulos.php" class="flex items-center space-x-2 bg-pink-100 text-white font-semibold px-4 py-2 rounded-full shadow hover:bg-cyan-600 transition transform hover:scale-105">
+    <img src="../assets/click.png" alt="Inicio" class="h-5">
     <span>volver</span>
   </a>
 </div>
@@ -55,6 +58,7 @@ echo "<script>
       <input type="text" name="nombre" placeholder="Nombre" required class="p-2 border rounded" />
       <input type="text" name="apellido" placeholder="Apellido" required class="p-2 border rounded" />
       <input type="text" name="documento" placeholder="Documento" required class="p-2 border rounded" />
+      <!-- Sexo -->
       <select name="sexo" required class="p-2 border rounded">
         <option value="">Sexo</option>
         <option value="Femenino">Femenino</option>
@@ -68,6 +72,38 @@ echo "<script>
       <input type="text" name="etnia" placeholder="Etnia" class="p-2 border rounded" />
       <input type="text" name="curso" placeholder="Curso" required class="p-2 border rounded" />
       <input type="tel" name="telefono" placeholder="Teléfono" required class="p-2 border rounded" />
+      <!-- Código de ruta -->
+        <select id="Cod_Ruta" name="Cod_Ruta" required class="p-2 border rounded">
+          <option value="" >Codigo de la Ruta</option>
+          <option value="101">RT001</option>
+          <option value="102">RT002</option>
+          <option value="103">RT003</option>
+          <option value="104">RT004</option>
+          <option value="105">RT005</option>
+          <option value="106">RT006</option>
+          <option value="107">RT007</option>
+          <option value="108">RT008</option>
+          <option value="109">RT009</option>
+        </select>
+     <!-- Nombre de ruta -->
+        <select id="nombreRuta" name="Nombre_ruta" required class="p-2 border rounded">
+          <option value="">Nombre Ruta</option>
+          <option value="Ruta Norte">Ruta Norte</option>
+          <option value="Ruta Sur">Ruta Sur</option>
+          <option value="Ruta Centro">Ruta Este</option>
+          <option value="Ruta Norte">Ruta Oeste</option>
+          <option value="Ruta Sur">Ruta Centro</option>
+          <option value="Ruta Centro">Ruta Nororiente</option>
+          <option value="Ruta Norte">Ruta Noroccidente</option>
+          <option value="Ruta Sur">Ruta Suroriente</option>
+          <option value="Ruta Centro">Ruta Suroccidente</option>
+        </select>
+    <!-- Estado -->
+ <select name="Estado" required class="p-2 border rounded">
+        <option value="">Estado</option>
+        <option value="Pendiente">Pendiente</option>
+      </select>
+      
 
       <div class="md:col-span-2 text-center mt-4">
         <button type="submit" class="bg-purple-600 text-white font-bold px-6 py-3 rounded-full shadow-lg hover:shadow-xl hover:bg-purple-700 transition duration-300 transform hover:-translate-y-1">
@@ -125,7 +161,7 @@ echo "<script>
     });
 
     function cargarEstudiantes() {
-      fetch("listar_estudiantes.php")
+      fetch("listar_estud.php")
         .then(res => res.text())
         .then(data => {
           document.getElementById("tablaEstudiantes").innerHTML = data;

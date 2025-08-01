@@ -1,6 +1,7 @@
 <?php
 session_start();
-include 'conexion.php';
+include_once '../modelo/conexion.php';
+
 
 
 // Obtener datos del formulario
