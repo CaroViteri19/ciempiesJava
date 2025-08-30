@@ -9,9 +9,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class CiempiesSgiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CiempiesSgiApplication.class, args
-        );
-        System.out.println("hola mundo");
+        SpringApplication.run(CiempiesSgiApplication.class, args);
+        System.out.println("🚀 CIEMPIÉS SGI iniciado en http://localhost:8080");
     }
 }
 

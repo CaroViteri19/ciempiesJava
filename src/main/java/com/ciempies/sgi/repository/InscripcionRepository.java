@@ -37,3 +37,4 @@ public interface InscripcionRepository extends JpaRepository<Inscripcion, Intege
     long countByCodRutaAndEstado(@Param("codRuta") Integer codRuta, @Param("estado") Inscripcion.Estado estado);
 }
 
+
