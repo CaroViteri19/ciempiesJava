@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Zonas - CIEMPIÉS SGI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Sidebar -->
+    <nav class="fixed top-0 left-0 h-full w-64 bg-blue-800 text-white shadow-lg z-50">
+        <div class="p-4">
+            <h1 class="text-xl font-bold" th:text="${appName}">CIEMPIÉS SGI</h1>
+        </div>
+        
+        <div class="mt-8">
+            <ul class="space-y-2">
+                <li>
+                    <a href="/" class="flex items-center px-4 py-2 text-white hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-home w-5"></i>
+                        <span class="ml-3">Inicio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard" class="flex items-center px-4 py-2 text-white hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-tachometer-alt w-5"></i>
+                        <span class="ml-3">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/usuarios" class="flex items-center px-4 py-2 text-white hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-users w-5"></i>
+                        <span class="ml-3">Usuarios</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/estudiantes" class="flex items-center px-4 py-2 text-white hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-user-graduate w-5"></i>
+                        <span class="ml-3">Estudiantes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/rutas" class="flex items-center px-4 py-2 text-white hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-route w-5"></i>
+                        <span class="ml-3">Rutas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/asistencias" class="flex items-center px-4 py-2 text-white hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-clipboard-check w-5"></i>
+                        <span class="ml-3">Asistencias</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/inscripciones" class="flex items-center px-4 py-2 text-white hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-edit w-5"></i>
+                        <span class="ml-3">Inscripciones</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/zonas" class="flex items-center px-4 py-2 text-white bg-blue-700 transition-colors">
+                        <i class="fas fa-map-marker-alt w-5"></i>
+                        <span class="ml-3">Zonas</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="absolute bottom-4 left-4 right-4">
+            <div class="text-xs text-gray-300">
+                <p th:text="'Versión: ' + ${appVersion}">Versión: 1.0.0</p>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="ml-64 min-h-screen">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b">
+            <div class="flex items-center justify-between px-6 py-4">
+                <div>
+                    <h2 class="text-2xl font-semibold text-gray-800" th:text="${title}">Gestión de Zonas</h2>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="nuevaZonaBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                        <i class="fas fa-plus mr-2"></i>Nueva Zona
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Content -->
+        <main class="p-6">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                            <i class="fas fa-map-marker-alt text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Total Zonas</p>
+                            <p class="text-2xl font-semibold text-gray-900" th:text="${zonas != null ? zonas.size() : 0}">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100 text-green-600">
+                            <i class="fas fa-school text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Colegios</p>
+                            <p class="text-2xl font-semibold text-gray-900" th:text="${zonas != null ? zonas.stream().map(z -> z.idColegio).distinct().count() : 0}">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                            <i class="fas fa-users text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Usuarios Asignados</p>
+                            <p class="text-2xl font-semibold text-gray-900" th:text="${zonas != null ? zonas.stream().filter(z -> z.idUsuario != null).count() : 0}">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Table -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">Lista de Zonas</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Colegio</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Código Zona</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuario Asignado</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr th:if="${zonas == null || zonas.isEmpty()}">
+                                <td colspan="5" class="px-6 py-4 text-center text-gray-500">No hay zonas registradas</td>
+                            </tr>
+                            <tr th:each="zona : ${zonas}" th:if="${zonas != null}">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" th:text="${zona.idZona}">1</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" th:text="${zona.idColegio}">Colegio 001</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" th:text="${zona.codZona}">Z001</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" th:text="${zona.idUsuario != null ? 'Usuario ' + zona.idUsuario : 'Sin asignar'}">Usuario 1</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-blue-600 hover:text-blue-900 mr-3">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-red-600 hover:text-red-900">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal Nueva Zona -->
+    <div id="modalZona" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">Nueva Zona</h3>
+                </div>
+                <form id="formZona" class="p-6">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">ID Colegio</label>
+                            <input type="number" name="idColegio" required class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Código de Zona</label>
+                            <input type="number" name="codZona" required class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Usuario Asignado (Opcional)</label>
+                            <input type="number" name="idUsuario" class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-end space-x-3">
+                        <button type="button" id="cancelarBtn" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Modal functionality
+        const modal = document.getElementById('modalZona');
+        const nuevaZonaBtn = document.getElementById('nuevaZonaBtn');
+        const cancelarBtn = document.getElementById('cancelarBtn');
+        const formZona = document.getElementById('formZona');
+        
+        nuevaZonaBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+        });
+        
+        cancelarBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+        
+        formZona.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Aquí se enviaría la data al backend
+            alert('Zona creada exitosamente');
+            modal.classList.add('hidden');
+            formZona.reset();
+        });
+        
+        // Cerrar modal al hacer clic fuera
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
+

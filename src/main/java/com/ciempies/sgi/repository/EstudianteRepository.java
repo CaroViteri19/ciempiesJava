@@ -1,9 +1,6 @@
 package com.ciempies.sgi.repository;
 
 import com.ciempies.sgi.entity.Estudiante;
-import com.ciempies.sgi.entity.Ruta;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,57 +10,37 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
+public interface EstudianteRepository extends JpaRepository<Estudiante, Integer> {
     
-    Optional<Estudiante> findByDocumento(String documento);
+    Optional<Estudiante> findByDocumento(Integer documento);
     
-    Optional<Estudiante> findByDocumentoAndActivoTrue(String documento);
+    List<Estudiante> findByIdRuta(Integer idRuta);
     
-    boolean existsByDocumento(String documento);
+    List<Estudiante> findByIdColegio(Integer idColegio);
     
-    List<Estudiante> findByRuta(Ruta ruta);
+    List<Estudiante> findByCurso(String curso);
     
-    List<Estudiante> findByRutaAndActivoTrue(Ruta ruta);
+    List<Estudiante> findBySexo(Estudiante.Sexo sexo);
     
-    List<Estudiante> findByActivoTrue();
+    @Query("SELECT e FROM Estudiante e WHERE e.nombre LIKE %:nombre% OR e.apellido LIKE %:nombre%")
+    List<Estudiante> findByNombreContaining(@Param("nombre") String nombre);
     
-    Page<Estudiante> findByActivoTrue(Pageable pageable);
+    @Query("SELECT e FROM Estudiante e WHERE e.edad BETWEEN :edadMin AND :edadMax")
+    List<Estudiante> findByEdadBetween(@Param("edadMin") Integer edadMin, @Param("edadMax") Integer edadMax);
     
-    @Query("SELECT e FROM Estudiante e WHERE e.activo = true AND " +
-           "(LOWER(e.nombre) LIKE LOWER(CONCAT('%', :busqueda, '%')) OR " +
-           "LOWER(e.apellido) LIKE LOWER(CONCAT('%', :busqueda, '%')) OR " +
-           "e.documento LIKE CONCAT('%', :busqueda, '%'))")
-    Page<Estudiante> buscarEstudiantes(@Param("busqueda") String busqueda, Pageable pageable);
+    List<Estudiante> findByEps(String eps);
     
-    @Query("SELECT e FROM Estudiante e WHERE e.ruta.idRuta = :idRuta AND e.activo = true")
-    List<Estudiante> findByRutaId(@Param("idRuta") Long idRuta);
+    List<Estudiante> findByDiscapacidad(String discapacidad);
     
-    @Query("SELECT COUNT(e) FROM Estudiante e WHERE e.ruta.idRuta = :idRuta AND e.activo = true")
-    long countByRutaId(@Param("idRuta") Long idRuta);
+    List<Estudiante> findByEtnia(String etnia);
     
-    @Query("SELECT e FROM Estudiante e WHERE e.curso = :curso AND e.activo = true")
-    List<Estudiante> findByCurso(@Param("curso") String curso);
+    boolean existsByDocumento(Integer documento);
     
-    @Query("SELECT e FROM Estudiante e WHERE e.edad BETWEEN :edadMin AND :edadMax AND e.activo = true")
-    List<Estudiante> findByRangoEdad(@Param("edadMin") Integer edadMin, @Param("edadMax") Integer edadMax);
+    @Query("SELECT COUNT(e) FROM Estudiante e WHERE e.idRuta = :idRuta")
+    long countByIdRuta(@Param("idRuta") Integer idRuta);
     
-    @Query("SELECT e.sexo, COUNT(e) FROM Estudiante e WHERE e.activo = true GROUP BY e.sexo")
-    List<Object[]> contarPorSexo();
+    @Query("SELECT COUNT(e) FROM Estudiante e WHERE e.idColegio = :idColegio")
+    long countByIdColegio(@Param("idColegio") Integer idColegio);
     
-    @Query("SELECT e.curso, COUNT(e) FROM Estudiante e WHERE e.activo = true GROUP BY e.curso ORDER BY e.curso")
-    List<Object[]> contarPorCurso();
-    
-    // Métodos para el dashboard
-    List<Estudiante> findByCursoAndActivoTrue(Integer curso);
-    
-    List<Estudiante> findByEdadBetweenAndActivoTrue(Integer edadMin, Integer edadMax);
-    
-    long countBySexoAndActivoTrue(String sexo);
-    
-    long countByCursoAndActivoTrue(Integer curso);
-    
-    long countByActivoTrue();
-    
-    @Query("SELECT e FROM Estudiante e WHERE e.activo = true")
-    List<Estudiante> findAllActivos();
+    long countBySexo(Estudiante.Sexo sexo);
 }

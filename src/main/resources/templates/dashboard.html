@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Dashboard - CIEMPIÉS SGI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Sidebar -->
+    <nav class="fixed top-0 left-0 h-full w-64 bg-blue-800 text-white shadow-lg z-50">
+        <div class="p-4">
+            <h1 class="text-xl font-bold" th:text="${appName}">CIEMPIÉS SGI</h1>
+        </div>
+        
+        <div class="mt-8">
+            <ul class="space-y-2">
+                <li>
+                    <a href="/" class="flex items-center px-4 py-2 text-white hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-home w-5"></i>
+                        <span class="ml-3">Inicio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard" class="flex items-center px-4 py-2 text-white bg-blue-700 transition-colors">
+                        <i class="fas fa-tachometer-alt w-5"></i>
+                        <span class="ml-3">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/usuarios" class="flex items-center px-4 py-2 text-white hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-users w-5"></i>
+                        <span class="ml-3">Usuarios</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/estudiantes" class="flex items-center px-4 py-2 text-white hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-user-graduate w-5"></i>
+                        <span class="ml-3">Estudiantes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/rutas" class="flex items-center px-4 py-2 text-white hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-route w-5"></i>
+                        <span class="ml-3">Rutas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/asistencias" class="flex items-center px-4 py-2 text-white hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-clipboard-check w-5"></i>
+                        <span class="ml-3">Asistencias</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/inscripciones" class="flex items-center px-4 py-2 text-white hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-edit w-5"></i>
+                        <span class="ml-3">Inscripciones</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/zonas" class="flex items-center px-4 py-2 text-white hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-map-marker-alt w-5"></i>
+                        <span class="ml-3">Zonas</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="absolute bottom-4 left-4 right-4">
+            <div class="text-xs text-gray-300">
+                <p th:text="'Versión: ' + ${appVersion}">Versión: 1.0.0</p>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="ml-64 min-h-screen">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b">
+            <div class="flex items-center justify-between px-6 py-4">
+                <div>
+                    <h2 class="text-2xl font-semibold text-gray-800" th:text="${title}">Dashboard</h2>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Buscar..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <img src="https://via.placeholder.com/32" alt="Avatar" class="w-8 h-8 rounded-full">
+                        <span class="text-gray-700">Usuario</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Dashboard Content -->
+        <main class="p-6">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
+                <!-- Usuarios -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                            <i class="fas fa-users text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Usuarios</p>
+                            <p class="text-2xl font-semibold text-gray-900" th:text="${totalUsuarios}">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Estudiantes -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100 text-green-600">
+                            <i class="fas fa-user-graduate text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Estudiantes</p>
+                            <p class="text-2xl font-semibold text-gray-900" th:text="${totalEstudiantes}">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Rutas -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
+                            <i class="fas fa-route text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Rutas</p>
+                            <p class="text-2xl font-semibold text-gray-900" th:text="${totalRutas}">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Asistencias -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                            <i class="fas fa-clipboard-check text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Asistencias</p>
+                            <p class="text-2xl font-semibold text-gray-900" th:text="${totalAsistencias}">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Inscripciones -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-indigo-100 text-indigo-600">
+                            <i class="fas fa-edit text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Inscripciones</p>
+                            <p class="text-2xl font-semibold text-gray-900" th:text="${totalInscripciones}">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Zonas -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-red-100 text-red-600">
+                            <i class="fas fa-map-marker-alt text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Zonas</p>
+                            <p class="text-2xl font-semibold text-gray-900" th:text="${totalZonas}">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Chart 1 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Distribución por Módulos</h3>
+                    <canvas id="moduleChart" width="400" height="200"></canvas>
+                </div>
+                
+                <!-- Chart 2 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Actividad Reciente</h3>
+                    <canvas id="activityChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Acciones Rápidas</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <a href="/usuarios" class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-user-plus text-blue-600 text-xl mr-3"></i>
+                        <span class="text-gray-700">Nuevo Usuario</span>
+                    </a>
+                    <a href="/estudiantes" class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-user-graduate text-green-600 text-xl mr-3"></i>
+                        <span class="text-gray-700">Nuevo Estudiante</span>
+                    </a>
+                    <a href="/rutas" class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-route text-yellow-600 text-xl mr-3"></i>
+                        <span class="text-gray-700">Nueva Ruta</span>
+                    </a>
+                    <a href="/asistencias" class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-clipboard-check text-purple-600 text-xl mr-3"></i>
+                        <span class="text-gray-700">Registrar Asistencia</span>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Module Distribution Chart
+        const moduleCtx = document.getElementById('moduleChart').getContext('2d');
+        const moduleChart = new Chart(moduleCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Usuarios', 'Estudiantes', 'Rutas', 'Asistencias', 'Inscripciones', 'Zonas'],
+                datasets: [{
+                    data: [
+                        document.querySelector('[data-th-text="${totalUsuarios}"]')?.textContent || 0,
+                        document.querySelector('[data-th-text="${totalEstudiantes}"]')?.textContent || 0,
+                        document.querySelector('[data-th-text="${totalRutas}"]')?.textContent || 0,
+                        document.querySelector('[data-th-text="${totalAsistencias}"]')?.textContent || 0,
+                        document.querySelector('[data-th-text="${totalInscripciones}"]')?.textContent || 0,
+                        document.querySelector('[data-th-text="${totalZonas}"]')?.textContent || 0
+                    ],
+                    backgroundColor: [
+                        '#3B82F6',
+                        '#10B981',
+                        '#F59E0B',
+                        '#8B5CF6',
+                        '#6366F1',
+                        '#EF4444'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+        
+        // Activity Chart
+        const activityCtx = document.getElementById('activityChart').getContext('2d');
+        const activityChart = new Chart(activityCtx, {
+            type: 'line',
+            data: {
+                labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+                datasets: [{
+                    label: 'Actividad',
+                    data: [12, 19, 3, 5, 2, 3, 7],
+                    borderColor: '#3B82F6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

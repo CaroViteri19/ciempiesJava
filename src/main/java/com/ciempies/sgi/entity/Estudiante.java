@@ -1,7 +1,6 @@
 package com.ciempies.sgi.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 @Entity
@@ -11,95 +10,115 @@ public class Estudiante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_Estudiante")
-    private Long idEstudiante;
+    private Integer idEstudiante;
     
-    @NotBlank(message = "El nombre es obligatorio")
-    @Size(max = 50, message = "El nombre no puede exceder 50 caracteres")
-    @Column(name = "Nombre", nullable = false)
+    @Column(name = "Id_acudiente", nullable = false)
+    private Integer idAcudiente;
+    
+    @Column(name = "Id_colegio", nullable = false)
+    private Integer idColegio;
+    
+    @Column(name = "Id_Jornada", nullable = false)
+    private Integer idJornada;
+    
+    @Column(name = "Id_Ruta", nullable = false)
+    private Integer idRuta;
+    
+    @Column(name = "Nombre", nullable = false, length = 15)
     private String nombre;
     
-    @NotBlank(message = "El apellido es obligatorio")
-    @Size(max = 50, message = "El apellido no puede exceder 50 caracteres")
-    @Column(name = "Apellido", nullable = false)
+    @Column(name = "Apellido", nullable = false, length = 15)
     private String apellido;
     
-    @NotBlank(message = "El documento es obligatorio")
-    @Size(max = 20, message = "El documento no puede exceder 20 caracteres")
-    @Column(name = "Documento", unique = true, nullable = false)
-    private String documento;
+    @Column(name = "Documento", nullable = false)
+    private Integer documento;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "Sexo", nullable = false)
     private Sexo sexo;
     
-    @NotBlank(message = "La EPS es obligatoria")
-    @Size(max = 100, message = "La EPS no puede exceder 100 caracteres")
-    @Column(name = "EPS", nullable = false)
+    @Column(name = "Eps", length = 15)
     private String eps;
     
-    @NotBlank(message = "La dirección es obligatoria")
-    @Size(max = 200, message = "La dirección no puede exceder 200 caracteres")
-    @Column(name = "Direccion", nullable = false)
+    @Column(name = "Direccion", nullable = false, length = 25)
     private String direccion;
     
-    @Min(value = 3, message = "La edad mínima es 3 años")
-    @Max(value = 18, message = "La edad máxima es 18 años")
     @Column(name = "Edad", nullable = false)
     private Integer edad;
     
-    @Size(max = 100, message = "La discapacidad no puede exceder 100 caracteres")
-    @Column(name = "Discapacidad")
+    @Column(name = "Discapacidad", length = 15)
     private String discapacidad;
     
-    @Size(max = 50, message = "La etnia no puede exceder 50 caracteres")
-    @Column(name = "Etnia")
+    @Column(name = "Etnia", length = 15)
     private String etnia;
     
-    @NotBlank(message = "El curso es obligatorio")
-    @Size(max = 20, message = "El curso no puede exceder 20 caracteres")
-    @Column(name = "Curso", nullable = false)
+    @Column(name = "Fecha_Inscripcion", nullable = false)
+    private LocalDate fechaInscripcion;
+    
+    @Column(name = "Curso", nullable = false, length = 10)
     private String curso;
     
-    @Pattern(regexp = "^[0-9]{10}$", message = "El teléfono debe tener 10 dígitos")
-    @Column(name = "Telefono", nullable = false)
+    @Column(name = "Telefono", length = 50)
     private String telefono;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Id_Ruta")
-    private Ruta ruta;
+    @Column(name = "Id_Inscripcion")
+    private Integer idInscripcion;
     
-    @Column(name = "Fecha_Registro")
-    private LocalDate fechaRegistro;
-    
-    @Column(name = "Activo")
-    private Boolean activo = true;
+    @Column(name = "Id_Asistencia")
+    private Integer idAsistencia;
     
     // Constructores
-    public Estudiante() {
-        this.fechaRegistro = LocalDate.now();
-    }
+    public Estudiante() {}
     
-    public Estudiante(String nombre, String apellido, String documento, Sexo sexo, 
-                     String eps, String direccion, Integer edad, String curso, String telefono) {
-        this();
+    public Estudiante(String nombre, String apellido, Integer documento, Sexo sexo, String direccion, Integer edad, String curso) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.documento = documento;
         this.sexo = sexo;
-        this.eps = eps;
         this.direccion = direccion;
         this.edad = edad;
         this.curso = curso;
-        this.telefono = telefono;
     }
     
     // Getters y Setters
-    public Long getIdEstudiante() {
+    public Integer getIdEstudiante() {
         return idEstudiante;
     }
     
-    public void setIdEstudiante(Long idEstudiante) {
+    public void setIdEstudiante(Integer idEstudiante) {
         this.idEstudiante = idEstudiante;
+    }
+    
+    public Integer getIdAcudiente() {
+        return idAcudiente;
+    }
+    
+    public void setIdAcudiente(Integer idAcudiente) {
+        this.idAcudiente = idAcudiente;
+    }
+    
+    public Integer getIdColegio() {
+        return idColegio;
+    }
+    
+    public void setIdColegio(Integer idColegio) {
+        this.idColegio = idColegio;
+    }
+    
+    public Integer getIdJornada() {
+        return idJornada;
+    }
+    
+    public void setIdJornada(Integer idJornada) {
+        this.idJornada = idJornada;
+    }
+    
+    public Integer getIdRuta() {
+        return idRuta;
+    }
+    
+    public void setIdRuta(Integer idRuta) {
+        this.idRuta = idRuta;
     }
     
     public String getNombre() {
@@ -118,11 +137,11 @@ public class Estudiante {
         this.apellido = apellido;
     }
     
-    public String getDocumento() {
+    public Integer getDocumento() {
         return documento;
     }
     
-    public void setDocumento(String documento) {
+    public void setDocumento(Integer documento) {
         this.documento = documento;
     }
     
@@ -174,6 +193,14 @@ public class Estudiante {
         this.etnia = etnia;
     }
     
+    public LocalDate getFechaInscripcion() {
+        return fechaInscripcion;
+    }
+    
+    public void setFechaInscripcion(LocalDate fechaInscripcion) {
+        this.fechaInscripcion = fechaInscripcion;
+    }
+    
     public String getCurso() {
         return curso;
     }
@@ -190,39 +217,24 @@ public class Estudiante {
         this.telefono = telefono;
     }
     
-    public Ruta getRuta() {
-        return ruta;
+    public Integer getIdInscripcion() {
+        return idInscripcion;
     }
     
-    public void setRuta(Ruta ruta) {
-        this.ruta = ruta;
+    public void setIdInscripcion(Integer idInscripcion) {
+        this.idInscripcion = idInscripcion;
     }
     
-    public LocalDate getFechaRegistro() {
-        return fechaRegistro;
+    public Integer getIdAsistencia() {
+        return idAsistencia;
     }
     
-    public void setFechaRegistro(LocalDate fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
-    }
-    
-    public Boolean getActivo() {
-        return activo;
-    }
-    
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
-    }
-    
-    // Métodos de utilidad
-    public String getNombreCompleto() {
-        return nombre + " " + apellido;
+    public void setIdAsistencia(Integer idAsistencia) {
+        this.idAsistencia = idAsistencia;
     }
     
     // Enum para sexo
     public enum Sexo {
-        FEMENINO,
-        MASCULINO,
-        OTRO
+        femenino, masculino
     }
 }

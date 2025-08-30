@@ -10,34 +10,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface RutaRepository extends JpaRepository<Ruta, Long> {
+public interface RutaRepository extends JpaRepository<Ruta, Integer> {
     
-    Optional<Ruta> findByCodRuta(String codRuta);
+    Optional<Ruta> findByCodRuta(Integer codRuta);
     
-    Optional<Ruta> findByCodRutaAndActivaTrue(String codRuta);
+    List<Ruta> findByIdUsuario(Integer idUsuario);
     
-    boolean existsByCodRuta(String codRuta);
+    List<Ruta> findByIdEstudiante(Integer idEstudiante);
     
-    List<Ruta> findByActivaTrue();
+    List<Ruta> findByIdInscripcion(Integer idInscripcion);
     
-    @Query("SELECT r FROM Ruta r WHERE r.activa = true AND r.capacidadMaxima > " +
-           "(SELECT COUNT(e) FROM Estudiante e WHERE e.ruta = r AND e.activo = true)")
-    List<Ruta> findRutasConCapacidad();
+    @Query("SELECT r FROM Ruta r WHERE r.nombreRuta LIKE %:nombre%")
+    List<Ruta> findByNombreRutaContaining(@Param("nombre") String nombre);
     
-    @Query("SELECT r FROM Ruta r WHERE r.activa = true ORDER BY r.nombreRuta")
-    List<Ruta> findRutasActivasOrdenadas();
+    boolean existsByCodRuta(Integer codRuta);
     
-    @Query("SELECT r FROM Ruta r WHERE LOWER(r.nombreRuta) LIKE LOWER(CONCAT('%', :busqueda, '%')) OR " +
-           "LOWER(r.codRuta) LIKE LOWER(CONCAT('%', :busqueda, '%'))")
-    List<Ruta> buscarRutas(@Param("busqueda") String busqueda);
-    
-    @Query("SELECT r, COUNT(e) as estudiantes FROM Ruta r LEFT JOIN Estudiante e ON e.ruta = r AND e.activo = true " +
-           "WHERE r.activa = true GROUP BY r ORDER BY r.nombreRuta")
-    List<Object[]> findRutasConConteoEstudiantes();
-    
-    // Métodos para el dashboard
-    long countByActivaTrue();
-    
-    @Query("SELECT r.nombreRuta, COUNT(e) FROM Ruta r LEFT JOIN r.estudiantes e WHERE r.activa = true AND e.activo = true GROUP BY r.idRuta, r.nombreRuta ORDER BY COUNT(e) DESC")
-    List<Object[]> findRutasWithStudentCount();
+    @Query("SELECT COUNT(r) FROM Ruta r WHERE r.idUsuario = :idUsuario")
+    long countByIdUsuario(@Param("idUsuario") Integer idUsuario);
 }

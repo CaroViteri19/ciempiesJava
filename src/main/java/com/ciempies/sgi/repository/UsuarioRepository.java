@@ -10,24 +10,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     
-    Optional<Usuario> findByCorreo(String correo);
+    Optional<Usuario> findByEmail(String email);
     
-    Optional<Usuario> findByCorreoAndActivoTrue(String correo);
+    Optional<Usuario> findByEmailAndContraseña(String email, String contraseña);
     
-    boolean existsByCorreo(String correo);
+    List<Usuario> findByRol(String rol);
     
-    List<Usuario> findByRol(Usuario.Rol rol);
+    List<Usuario> findByIdZona(Integer idZona);
     
-    List<Usuario> findByActivoTrue();
+    List<Usuario> findByIdRuta(Integer idRuta);
     
-    @Query("SELECT u FROM Usuario u WHERE u.rol IN :roles AND u.activo = true")
-    List<Usuario> findByRolesAndActivo(@Param("roles") List<Usuario.Rol> roles);
+    @Query("SELECT u FROM Usuario u WHERE u.nombre LIKE %:nombre% OR u.apellido LIKE %:nombre%")
+    List<Usuario> findByNombreContaining(@Param("nombre") String nombre);
     
-    @Query("SELECT COUNT(u) FROM Usuario u WHERE u.rol = :rol AND u.activo = true")
-    long countByRolAndActivo(@Param("rol") Usuario.Rol rol);
-    
-    // Métodos para el dashboard
-    long countByActivoTrue();
+    boolean existsByEmail(String email);
 }

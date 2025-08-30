@@ -1,0 +1,50 @@
+/* Estilos personalizados */
+
+
+.button-tailwind {
+  background-color: rgb(144, 174, 185); /* ¡Sin espacio entre rgb y paréntesis! */
+  border-radius: 10rem;
+  transition: background-color 0.3s ease;
+}
+
+.button-tailwind:hover {
+  background-color: rgb(206, 117, 184);
+}
+
+.card-stats {
+  background-color: #6b21a8;
+  
+  padding: 1rem;
+  border-radius: 10rem;
+  
+}
+.card-stats {
+  background: linear-gradient(135deg, #99d1f4, #de9ece); /* De cyan a azul */
+  border-radius: 1rem; /* Bordes redondeados */
+  padding: 1rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: rgb(23, 23, 23);
+}
+
+.card-stats:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card-stats p:first-child {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+}
+
+.card-stats p:last-child {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+
+
+  

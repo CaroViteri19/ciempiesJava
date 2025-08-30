@@ -1,109 +1,55 @@
 package com.ciempies.sgi.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
 
 @Entity
-@Table(name = "usuarios")
-public class Usuario implements UserDetails {
+@Table(name = "usuario")
+public class Usuario {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "Id_Usuario")
+    private Integer idUsuario;
     
-    @NotBlank(message = "El nombre es obligatorio")
-    @Size(max = 100, message = "El nombre no puede exceder 100 caracteres")
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "Nombre", nullable = false, length = 20)
     private String nombre;
     
-    @NotBlank(message = "El correo es obligatorio")
-    @Email(message = "El formato del correo no es válido")
-    @Column(name = "correo", unique = true, nullable = false)
-    private String correo;
+    @Column(name = "Apellido", nullable = false, length = 20)
+    private String apellido;
     
-    @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
-    @Column(name = "contrasena", nullable = false)
+    @Column(name = "Email", nullable = false, length = 50, unique = true)
+    private String email;
+    
+    @Column(name = "Contraseña", nullable = false, length = 15)
     private String contraseña;
     
-    @Enumerated(EnumType.STRING)
-    @Column(name = "rol", nullable = false)
-    private Rol rol;
+    @Column(name = "Rol", nullable = false, length = 50)
+    private String rol;
     
-    @Column(name = "activo", nullable = false)
-    private Boolean activo = true;
+    @Column(name = "Id_Zona")
+    private Integer idZona;
     
-    @Column(name = "fecha_creacion")
-    private LocalDateTime fechaCreacion;
-    
-    @Column(name = "ultimo_acceso")
-    private LocalDateTime ultimoAcceso;
+    @Column(name = "Id_ruta")
+    private Integer idRuta;
     
     // Constructores
-    public Usuario() {
-        this.fechaCreacion = LocalDateTime.now();
-    }
+    public Usuario() {}
     
-    public Usuario(String nombre, String correo, String contraseña, Rol rol) {
-        this();
+    public Usuario(String nombre, String apellido, String email, String contraseña, String rol) {
         this.nombre = nombre;
-        this.correo = correo;
+        this.apellido = apellido;
+        this.email = email;
         this.contraseña = contraseña;
         this.rol = rol;
     }
     
-    // Métodos de UserDetails
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + rol.name()));
-    }
-    
-    @Override
-    public String getPassword() {
-        return contraseña;
-    }
-    
-    @Override
-    public String getUsername() {
-        return correo;
-    }
-    
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-    
-    @Override
-    public boolean isAccountNonLocked() {
-        return activo;
-    }
-    
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-    
-    @Override
-    public boolean isEnabled() {
-        return activo;
-    }
-    
     // Getters y Setters
-    public Long getId() {
-        return id;
+    public Integer getIdUsuario() {
+        return idUsuario;
     }
     
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
     
     public String getNombre() {
@@ -114,12 +60,20 @@ public class Usuario implements UserDetails {
         this.nombre = nombre;
     }
     
-    public String getCorreo() {
-        return correo;
+    public String getApellido() {
+        return apellido;
     }
     
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
     }
     
     public String getContraseña() {
@@ -130,42 +84,27 @@ public class Usuario implements UserDetails {
         this.contraseña = contraseña;
     }
     
-    public Rol getRol() {
+    public String getRol() {
         return rol;
     }
     
-    public void setRol(Rol rol) {
+    public void setRol(String rol) {
         this.rol = rol;
     }
     
-    public Boolean getActivo() {
-        return activo;
+    public Integer getIdZona() {
+        return idZona;
     }
     
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
+    public void setIdZona(Integer idZona) {
+        this.idZona = idZona;
     }
     
-    public LocalDateTime getFechaCreacion() {
-        return fechaCreacion;
+    public Integer getIdRuta() {
+        return idRuta;
     }
     
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-    
-    public LocalDateTime getUltimoAcceso() {
-        return ultimoAcceso;
-    }
-    
-    public void setUltimoAcceso(LocalDateTime ultimoAcceso) {
-        this.ultimoAcceso = ultimoAcceso;
-    }
-    
-    // Enum para roles
-    public enum Rol {
-        ADMIN,
-        COORDINADOR,
-        MONITOR
+    public void setIdRuta(Integer idRuta) {
+        this.idRuta = idRuta;
     }
 }
