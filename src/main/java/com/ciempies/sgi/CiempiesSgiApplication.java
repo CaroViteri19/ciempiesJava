@@ -1,5 +1,6 @@
 package com.ciempies.sgi;
 
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -13,4 +14,3 @@ public class CiempiesSgiApplication {
         System.out.println("🚀 CIEMPIÉS SGI iniciado en http://localhost:8080");
     }
 }
-
